@@ -38,7 +38,7 @@ publishing {
         mavenJava(MavenPublication) {
             pom {
                 name = 'PAPI'
-                description = 'The API for all my plugins'
+                description = 'The API for all my Spigot plugins'
                 url = 'https://paulem79.github.io/'
                 developers {
                     developer {
