@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'fr.paulem.papi'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+    }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    compileOnly 'org.spigotmc:spigot-api:1.20.2-R0.1-SNAPSHOT'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'fr.paulem.papi'
+            artifactId = 'papi'
+            version = '1.0'
+
+            from components.java
+        }
+
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'PAPI'
+                description = 'The API for all my plugins'
+                url = 'https://paulem79.github.io/'
+                developers {
+                    developer {
+                        id = 'paulem'
+                        name = 'Paulem'
+                    }
+                }
+            }
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
