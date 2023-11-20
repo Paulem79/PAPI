@@ -22,11 +22,10 @@ public class Radius {
 
     public static Collection<Block> getBlocksInRadius(Location location, int radiusx, int radiusy, int radiusz) {
         Collection<Block> blockList = new ArrayList<>();
-        // Récupérer les informations du joueur
+
         World world = location.getWorld();
         if(world == null) throw new IllegalStateException("Location must contain a world");
 
-        // Calculer les limites du rayon autour du joueur
         int minX = location.getBlockX() - radiusx;
         int minY = location.getBlockY() - radiusy;
         int minZ = location.getBlockZ() - radiusz;
@@ -35,7 +34,6 @@ public class Radius {
         int maxY = location.getBlockY() + radiusy;
         int maxZ = location.getBlockZ() + radiusz;
 
-        // Parcourir chaque bloc dans le rayon
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = minZ; z <= maxZ; z++) {

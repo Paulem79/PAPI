@@ -1,7 +1,6 @@
 package fr.paulem.papi.customs.block.blocks;
 
-import fr.paulem.papi.customs.block.CustomBlock;
-import fr.paulem.papi.customs.block.CustomBlockType;
+import fr.paulem.papi.customs.block.BrownMushroomCustomBlock;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -12,9 +11,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class TestBlock extends CustomBlock {
-    public TestBlock(CustomBlockType blockType, boolean putInList) {
-        super(blockType, putInList);
+public class TestBlock extends BrownMushroomCustomBlock {
+    public TestBlock(boolean putInList) {
+        super(putInList);
     }
 
     @Override
