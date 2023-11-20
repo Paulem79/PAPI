@@ -11,6 +11,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * For test purposes
+ */
 public class TestBlock extends BrownMushroomCustomBlock {
     public TestBlock(boolean putInList) {
         super(putInList);
