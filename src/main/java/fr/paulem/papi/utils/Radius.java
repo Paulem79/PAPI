@@ -1,4 +1,4 @@
-package fr.paulem.papi.functions;
+package fr.paulem.papi.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +15,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class LibRadius {
+public class Radius {
     public static Collection<Block> getBlocksInRadius(Location location, int radius) {
         return getBlocksInRadius(location, radius, radius, radius);
     }

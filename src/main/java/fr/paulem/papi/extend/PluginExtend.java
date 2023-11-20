@@ -1,11 +1,11 @@
-package fr.paulem.papi.extendz;
+package fr.paulem.papi.extend;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PluginExtendz {
+public class PluginExtend {
     public final JavaPlugin main;
 
-    public PluginExtendz(JavaPlugin main){
+    public PluginExtend(JavaPlugin main){
         this.main = main;
     }
 }
