@@ -1,79 +1,105 @@
 package fr.paulem.papi.customs.block;
 
+import fr.paulem.papi.extend.PluginExtend;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public abstract class CustomBlock {
+public abstract class CustomBlock extends PluginExtend {
     /**
      * The list of all registered custom blocks
      */
     public static final List<CustomBlock> CUSTOM_BLOCKS = new ArrayList<>();
 
+    /**
+     * The list of all registered custom blocks' materials.<br>
+     * Uses {@link org.bukkit.Material}.
+     */
+    public static final Set<Material> CUSTOM_BLOCKS_MATERIALS = new HashSet<>();
+
     private final CustomBlockType blockType;
     private final Block customBlock;
-    private final Item droppedItem;
+    private final ItemStack droppedItem;
     private final boolean putInList;
 
-    public CustomBlock(@NotNull CustomBlockType blockType, boolean putInList){
-        Block properties = blockProperties();
+    public CustomBlock(JavaPlugin plugin, @NotNull CustomBlockType blockType, boolean putInList){
+        super(plugin);
+        Block properties = placedBlockProps();
         if(properties.getType() != blockType.getMaterial())
             throw new IllegalArgumentException("Block material must be one of CustomBlockType!");
 
+        Block blockProps = placedBlockProps();
+
         this.blockType = blockType;
         this.putInList = putInList;
-        this.customBlock = blockProperties();
-        this.droppedItem = droppedProperties();
+        this.customBlock = blockProps;
+        if(droppedItemProps() == null){
+            ItemStack item = new ItemStack(blockProps.getType());
+            item.setData(blockProps.getState().getData());
+            this.droppedItem = item;
+        } else this.droppedItem = droppedItemProps();
 
         if(putInList) CUSTOM_BLOCKS.add(this);
     }
 
     /**
      * Set the custom block properties here.<br><br>
-     * To set the custom block's dropped item properties see {@link #droppedProperties()}.
+     * To set the custom block's dropped item properties see {@link #droppedItemProps()}.
      */
-    public abstract @NotNull Block blockProperties();
+    public abstract @NotNull Block placedBlockProps();
 
     /**
-     * Set the custom block's dropped item properties here.<br><br>
-     * To set the custom block properties see {@link #blockProperties()}.
+     * Set the custom block's dropped item properties here.<br>
+     * If null, the dropped item is the custom block.<br><br>
+     * To set the custom block properties see {@link #placedBlockProps()}.
      */
-    public abstract @Nullable Item droppedProperties();
+    public abstract @Nullable ItemStack droppedItemProps();
+
+    public abstract @NotNull NamespacedKey getIdentifier();
 
     /**
      * Triggered when the custom block is right/left-clicked
-     * @param player The player who interacted
-     * @param action The type of click
+     * @param event The involved event
      */
-    public abstract void onInteract(Player player, Action action);
+    public abstract void onInteract(PlayerInteractEvent event);
+
+    /**
+     * Triggered when the custom block is placed
+     * @param event The involved event
+     */
+    public abstract void onPlace(BlockPlaceEvent event);
 
     /**
      * Triggered when the custom block is broke
-     * @param event The event containing parameters
+     * @param event The involved event
      */
     public abstract void onBreak(BlockBreakEvent event);
 
     /**
      * Triggered when the custom block's item is picked up by an entity
-     * @param entity The entity who picked up the custom block's item
-     * @param remaining The number of remaining items of this type on ground
+     * @param event The involved event
      */
-    public abstract void onPickup(LivingEntity entity, int remaining);
+    public abstract void onPickup(EntityPickupItemEvent event);
 
     /**
      * Triggered when the custom block's item is dropped
-     * @param entity The entity who dropped the custom block's item
+     * @param event The involved event
      */
-    public abstract void onDrop(Entity entity);
+    public abstract void onDrop(EntityDropItemEvent event);
 
     /**
      * Get the block type
@@ -95,7 +121,7 @@ public abstract class CustomBlock {
         return customBlock;
     }
 
-    public Item getDropItem() {
+    public ItemStack getDropItem() {
         return droppedItem;
     }
 }

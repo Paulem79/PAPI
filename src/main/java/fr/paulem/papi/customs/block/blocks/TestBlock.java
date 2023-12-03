@@ -1,36 +1,56 @@
 package fr.paulem.papi.customs.block.blocks;
 
-import fr.paulem.papi.customs.block.BrownMushroomCustomBlock;
+import fr.paulem.papi.customs.block.types.BrownMushroomCustomBlock;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.Action;
+import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 /**
  * For test purposes
  */
 public class TestBlock extends BrownMushroomCustomBlock {
-    public TestBlock(boolean putInList) {
-        super(putInList);
+    public TestBlock(JavaPlugin plugin, boolean putInList) {
+        super(plugin, putInList);
     }
 
     @Override
-    public @NotNull Block blockProperties() {
+    public @NotNull Block placedBlockProps() {
         return null;
     }
 
     @Override
-    public @Nullable Item droppedProperties() {
+    public @Nullable ItemStack droppedItemProps() {
         return null;
     }
 
     @Override
-    public void onInteract(Player player, Action action) {
+    public @NotNull NamespacedKey getIdentifier() {
+        return null;
+    }
+
+    @Override
+    public @NotNull Set<BlockFace> getFaces() {
+        return null;
+    }
+
+    @Override
+    public void onInteract(PlayerInteractEvent event) {
+
+    }
+
+    @Override
+    public void onPlace(BlockPlaceEvent event) {
 
     }
 
@@ -40,12 +60,12 @@ public class TestBlock extends BrownMushroomCustomBlock {
     }
 
     @Override
-    public void onPickup(LivingEntity entity, int remaining) {
+    public void onPickup(EntityPickupItemEvent event) {
 
     }
 
     @Override
-    public void onDrop(Entity entity) {
+    public void onDrop(EntityDropItemEvent event) {
 
     }
 }

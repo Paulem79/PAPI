@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * listener
  */
 public class PluginExtendListener extends PluginExtend implements Listener {
-    public PluginExtendListener(JavaPlugin main){
-        super(main);
+    public PluginExtendListener(JavaPlugin plugin){
+        super(plugin);
     }
 }
